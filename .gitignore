@@ -1,0 +1,19 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets / OS
+.env
+.DS_Store
+
+# Separate repo (real-speaker word recordings), not vendored
+jyutping-chart/
+
+node_modules/

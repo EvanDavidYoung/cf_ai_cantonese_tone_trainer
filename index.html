@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cantonese Tone Trainer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Cantonese Tone Trainer</h1>
+
+    <div class="toggle-group" role="group" aria-label="Romanization system">
+      <button class="toggle-btn active" id="btn-jyutping" onclick="setMode('jyutping')">Jyutping</button>
+      <button class="toggle-btn" id="btn-yale" onclick="setMode('yale')">Yale</button>
+    </div>
+
+    <div class="toggle-group" id="syllable-selector" role="group" aria-label="Training syllable"></div>
+
+    <div class="controls">
+      <button class="ctrl-btn play-btn" id="play-btn" onclick="playRandom()">▶ Play</button>
+      <button class="ctrl-btn replay-btn" id="replay-btn" onclick="replay()" disabled>↺ Replay</button>
+    </div>
+
+    <p class="instruction" id="instruction">Press Play to hear a tone, then select the matching button.</p>
+
+    <div class="tone-grid" id="tone-grid"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
