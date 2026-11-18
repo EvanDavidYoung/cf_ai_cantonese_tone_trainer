@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cantonese Tone Trainer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Tone Trainer</h1>
+      <div class="clock" title="Practice time counts while you're active and stops 30s after your last action.">
+        <span class="dot" aria-hidden="true"></span>
+        <b id="clock">0:00</b> today · <span id="clock-total">0:00</span> total
+      </div>
+    </header>
+
+    <section class="account-bar">
+      <form id="auth-form" class="auth" autocomplete="on">
+        <input id="username" name="username" placeholder="Username" autocomplete="username" aria-label="Username">
+        <input id="password" name="password" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password">
+        <button class="btn small" type="submit" value="login">Log in</button>
+        <button class="btn small" type="submit" value="signup">Sign up</button>
+        <p class="auth-note muted">Log in to save progress across devices. Otherwise it's kept in this browser.</p>
+        <p id="auth-error" class="auth-error" role="alert"></p>
+      </form>
+      <div id="account" class="account" hidden>
+        Signed in as <b class="who"></b>
+        <span class="sync muted"></span>
+        <button class="btn small logout" type="button">Log out</button>
+      </div>
+    </section>
+
+    <div class="stats" id="stats" aria-live="polite"></div>
+
+    <section class="card" id="card">
+      <p class="reason" id="reason"></p>
+      <p class="gloss" id="gloss">Loading words…</p>
+      <div class="word" id="word"></div>
+
+      <div class="controls">
+        <button class="btn primary" id="play-btn" disabled>▶ Play</button>
+        <button class="btn" id="action-btn" disabled>Check</button>
+      </div>
+      <p class="hint" id="hint">Pick a tone for each syllable.</p>
+    </section>
+
+    <section class="panel chat" id="chat">
+      <div class="chat-head">
+        <b>Tutor</b>
+        <span class="muted">Ask about your weak tones, how to practise, or anything Cantonese.</span>
+        <button class="btn small" id="chat-clear" type="button" hidden>Clear chat</button>
+      </div>
+      <p class="muted" id="chat-locked">Log in to chat with the tutor. It reads your saved answers to explain what you're mixing up.</p>
+      <div id="chat-body" hidden>
+        <div class="chat-log" id="chat-log" aria-live="polite"></div>
+        <div class="chat-suggestions" id="chat-suggestions">
+          <button class="chip" type="button">Explain my weak tones</button>
+          <button class="chip" type="button">Which tones do I mix up, and how do I hear the difference?</button>
+          <button class="chip" type="button">What is minimal pair training and does it work?</button>
+          <button class="chip" type="button">Make me a 10-minute practice plan</button>
+        </div>
+        <form class="chat-form" id="chat-form">
+          <textarea id="chat-input" rows="2" maxlength="2000" placeholder="Message the tutor… (Enter to send, Shift+Enter for a new line)" aria-label="Message the tutor"></textarea>
+          <button class="btn primary" id="chat-send" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel export">
+      <div>
+        <b>Your history</b> <span class="muted" id="export-count">0 answers</span>
+      </div>
+      <div class="export-buttons">
+        <button class="btn small" data-export="answers">Answers CSV</button>
+        <button class="btn small" data-export="practice">Practice time CSV</button>
+        <button class="btn small" data-export="all">Everything JSON</button>
+        <button class="btn small" data-export="digest" title="A compact Markdown summary of your progress, made to paste into your own AI tutor or agent">Learner digest (.md)</button>
+      </div>
+      <p class="muted export-note" id="export-note"></p>
+    </section>
+
+    <details class="panel confusion">
+      <summary>Mistakes by tone</summary>
+      <p class="muted">Rows are the tone that was spoken; columns are what you picked.</p>
+      <div id="confusion"></div>
+    </details>
+
+    <footer class="muted keys">
+      Keys: <kbd>1</kbd>–<kbd>6</kbd> pick tones · <kbd>⌫</kbd> undo · <kbd>Space</kbd> replay · <kbd>Enter</kbd> check / next
+    </footer>
+  </main>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

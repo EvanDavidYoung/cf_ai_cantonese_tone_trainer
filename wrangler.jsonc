@@ -1,0 +1,41 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cantonese-tone-trainer",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    // The Worker strips the /tone-trainer prefix, so it must see every request.
+    "run_worker_first": true
+  },
+  // Mounted at tools.evanyoung.dev/tone-trainer/ (the rest of tools.evanyoung.dev
+  // belongs to the separate "tools" Worker via its custom domain).
+  "routes": [{ "pattern": "tools.evanyoung.dev/tone-trainer*", "zone_name": "evanyoung.dev" }],
+  "workers_dev": false,
+  "observability": { "enabled": true },
+  // Workers AI (Llama 3.3) for the tutor chat. Runs against Cloudflare even in
+  // `wrangler dev`, so local chats use your account's Workers AI quota.
+  "ai": { "binding": "AI", "remote": true },
+  // Learner digests: per-learner instances started by the API, plus a nightly
+  // fan-out over active learners started by the cron below (worker/index.js
+  // `scheduled`). See worker/digest-workflow.js. Workflow "schedules" would
+  // replace the cron but require a paid Workers plan.
+  "workflows": [
+    {
+      "name": "tone-trainer-digest",
+      "binding": "DIGEST",
+      "class_name": "DigestWorkflow"
+    }
+  ],
+  // 04:00 UTC every day.
+  "triggers": { "crons": ["0 4 * * *"] },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tone-trainer",
+      "database_id": "2683e6ed-dc70-4e7f-bcfb-da4a15a51e7d",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

@@ -17,3 +17,6 @@ wheels/
 jyutping-chart/
 
 node_modules/
+public/audio/
+public/data/
+.wrangler/

@@ -1,0 +1,16 @@
+{
+  "name": "cantonese-tone-trainer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --import ./test/setup.mjs --test test/*.test.mjs",
+    "setup:audio": "bash scripts/fetch-audio.sh",
+    "build:words": "node scripts/build-words.mjs",
+    "db:migrate": "wrangler d1 migrations apply tone-trainer --local",
+    "dev": "npm run db:migrate && wrangler dev --port 8080",
+    "deploy": "wrangler d1 migrations apply tone-trainer --remote && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.164.0"
+  }
+}
